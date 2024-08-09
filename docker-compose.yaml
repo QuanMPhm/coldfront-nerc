@@ -8,8 +8,8 @@ services:
     image: knikolla/coldfront:latest
     environment:
       DEBUG: "True"
-      INITIAL_SETUP: "False"
-      LOAD_TEST_DATA: "False"
+      INITIAL_SETUP: "True"
+      LOAD_TEST_DATA: "True"
       SECRET_KEY: "klajsfkljasdfkljasdfkljadsfjklads"
       DATABASE_ENGINE: 'django.db.backends.mysql'
       DATABASE_HOST: 'coldfront-database'
@@ -24,11 +24,11 @@ services:
       OIDC_RP_SIGN_ALGO: RS256
       OIDC_RP_SCOPES: "openid email profile"
       OIDC_RP_CLIENT_ID: coldfront
-      OIDC_RP_CLIENT_SECRET: f4fcef30-5688-426d-9b93-83fd817f9f0d
-      OIDC_OP_AUTHORIZATION_ENDPOINT: "https://keycloak:8443/auth/realms/master/protocol/openid-connect/auth"
-      OIDC_OP_TOKEN_ENDPOINT: "https://keycloak:8443/auth/realms/master/protocol/openid-connect/token"
-      OIDC_OP_USER_ENDPOINT: "https://keycloak:8443/auth/realms/master/protocol/openid-connect/userinfo"
-      OIDC_OP_JWKS_ENDPOINT: "https://keycloak:8443/auth/realms/master/protocol/openid-connect/certs"
+      OIDC_RP_CLIENT_SECRET: "XuQyzzExN4jmaimfjPLnOymQxdInzApT"
+      OIDC_OP_AUTHORIZATION_ENDPOINT: "http://keycloak:8080/realms/master/protocol/openid-connect/auth"
+      OIDC_OP_TOKEN_ENDPOINT: "http://keycloak:8080/realms/master/protocol/openid-connect/token"
+      OIDC_OP_USER_ENDPOINT: "http://keycloak:8080/realms/master/protocol/openid-connect/userinfo"
+      OIDC_OP_JWKS_ENDPOINT: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
       OIDC_VERIFY_SSL: "False"
       KEYCLOAK_URL: "http://keycloak:8080"
       KEYCLOAK_USER: "admin"
@@ -41,7 +41,7 @@ services:
       ACCOUNT_CREATION_TEXT: >
         Any faculty, staff, student, or external collaborator must request an user account through the <a href="https://regapp.mss.mghpcc.org/" target="_blank">MGHPCC Shared Services (MGHPCC-SS) Account Portal</a>. For more information, please see the <a href="https://nerc.mghpcc.org/user-guides/" target="_blank">user guides</a>.
     ports:
-      - "8080:8080"
+      - "8081:8080"
 
   coldfront-database:
     image: mariadb:latest
@@ -61,8 +61,8 @@ services:
     image: knikolla/coldfront:latest
     environment:
       DEBUG: "True"
-      INITIAL_SETUP: "False"
-      LOAD_TEST_DATA: "False"
+      INITIAL_SETUP: "True"
+      LOAD_TEST_DATA: "True"
       SECRET_KEY: "klajsfkljasdfkljasdfkljadsfjklads"
       DATABASE_ENGINE: 'django.db.backends.mysql'
       DATABASE_HOST: 'coldfront-database'
@@ -77,11 +77,11 @@ services:
       OIDC_RP_SIGN_ALGO: RS256
       OIDC_RP_SCOPES: "openid email profile"
       OIDC_RP_CLIENT_ID: coldfront
-      OIDC_RP_CLIENT_SECRET: f4fcef30-5688-426d-9b93-83fd817f9f0d
-      OIDC_OP_AUTHORIZATION_ENDPOINT: "https://keycloak:8443/auth/realms/master/protocol/openid-connect/auth"
-      OIDC_OP_TOKEN_ENDPOINT: "https://keycloak:8443/auth/realms/master/protocol/openid-connect/token"
-      OIDC_OP_USER_ENDPOINT: "https://keycloak:8443/auth/realms/master/protocol/openid-connect/userinfo"
-      OIDC_OP_JWKS_ENDPOINT: "https://keycloak:8443/auth/realms/master/protocol/openid-connect/certs"
+      OIDC_RP_CLIENT_SECRET: "XuQyzzExN4jmaimfjPLnOymQxdInzApT"
+      OIDC_OP_AUTHORIZATION_ENDPOINT: "http://keycloak:8080/realms/master/protocol/openid-connect/auth"
+      OIDC_OP_TOKEN_ENDPOINT: "http://keycloak:8080/realms/master/protocol/openid-connect/token"
+      OIDC_OP_USER_ENDPOINT: "http://keycloak:8080/realms/master/protocol/openid-connect/userinfo"
+      OIDC_OP_JWKS_ENDPOINT: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
       OIDC_VERIFY_SSL: "False"
       KEYCLOAK_URL: "http://keycloak:8080"
       KEYCLOAK_USER: "admin"
@@ -92,10 +92,12 @@ services:
     command: ["python", "-m", "django", "qcluster"]
 
   keycloak:
-    image: jboss/keycloak:latest
+    image: quay.io/keycloak/keycloak:latest
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: nomoresecret
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: nomoresecret
       DB_VENDOR: postgres
       DB_DATABASE: keycloak
       DB_USER: keycloak
@@ -103,8 +105,9 @@ services:
       DB_ADDR: "keycloak-database"
       JAVA_OPTS: "-server -Xms128m -Xmx1024m -XX:MetaspaceSize=128M -XX:MaxMetaspaceSize=512m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true"
     ports:
-      - "8081:8080"  # host:container
+      - "8080:8080"  # host:container
       - "8443:8443"
+    command: ["start-dev", "--log-level=DEBUG"]
 
   keycloak-database:
     image: postgres:latest

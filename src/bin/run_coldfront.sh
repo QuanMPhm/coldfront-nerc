@@ -14,7 +14,7 @@ sleep 10
 
 if [[ "$INITIAL_SETUP" == "True" ]]
 then
-  python -m django initial_setup
+  python -m django initial_setup -f
   python -m django register_cloud_attributes
 fi
 
