@@ -27,18 +27,4 @@ data:
   CENTER_PROJECT_RENEWAL_HELP_URL: "https://nerc-project.github.io/nerc-docs/get-started/allocation/project-and-allocation-review/"
   ACCOUNT_CREATION_TEXT: >
     Any faculty, staff, student, or external collaborator must request an user account through the <a href="https://regapp.mss.mghpcc.org/" target="_blank">MGHPCC Shared Services (MGHPCC-SS) Account Portal</a>. For more information, please see the <a href="https://nerc.mghpcc.org/user-guides/" target="_blank">user guides</a>.
-  EMAIL_ENABLED: 'True'
-  EMAIL_USE_TLS: 'True'
-  EMAIL_HOST: 'email-smtp.us-east-1.amazonaws.com'
-  EMAIL_PORT: '587'
-  EMAIL_TICKET_SYSTEM_ADDRESS: 'help@nerc.mghpcc.org'
-  EMAIL_ADMIN_LIST: 'help@nerc.mghpcc.org'
-  EMAIL_SENDER: 'help@nerc.mghpcc.org'
-  EMAIL_DIRECTOR_EMAIL_ADDRESS: 'help@nerc.mghpcc.org'
-  EMAIL_PROJECT_REVIEW_CONTACT: 'help@nerc.mghpcc.org'
-  EMAIL_DEVELOPMENT_EMAIL_LIST: 'help@nerc.mghpcc.org'
-  EMAIL_SIGNATURE: |
-    New England Research Cloud (NERC)
-    https://nerc.mghpcc.org
-    https://nerc-project.github.io/nerc-docs
-    https://nerc.instatus.com
+  EMAIL_ENABLED: 'False'

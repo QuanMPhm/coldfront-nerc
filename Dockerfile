@@ -42,9 +42,6 @@ COPY src/local_settings.py /opt/venv/lib/python3.12/site-packages
 
 COPY src/bin/run_coldfront.sh /opt/venv/bin
 
-# Update NERC's email templates
-COPY src/email/ /opt/venv/lib/python3.12/site-packages/coldfront/templates/email/
-
 ENV PATH="/opt/venv/bin:$PATH"
 ENV DJANGO_SETTINGS_MODULE="local_settings"
 
